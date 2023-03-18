@@ -1,0 +1,43 @@
+a{
+    color: white !important;
+    text-decoration: none;
+    font-size: larger!important;
+}
+a:hover{
+    color: blue !important;
+}
+
+#item-link{
+    height: 600px;
+    background-color: white;
+    position: relative;
+    border-radius: 1rem;
+    margin-top: 10px;
+}
+.list-group-item {
+    padding: 20px !important;
+}
+
+#header{
+    margin-bottom: 12px;
+}
+
+#header-link{
+    height: 100px;
+    position: relative;
+    border-radius: 1rem;
+    margin-top: 10px;
+}
+
+#content{
+    height: 500px;
+    background-color: white;
+    position: relative;
+    border-radius: 1rem;
+}
+
+#footer{
+    height: 40px;
+    position: relative;
+    border-radius: 1rem;
+}
