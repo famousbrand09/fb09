@@ -28,10 +28,10 @@ public class BlindPersonController {
         return "list-cv";
     }
 
-    @GetMapping("form")
+    @GetMapping("input")
     public String getForm(Model model) {
         model.addAttribute("blindPerson", new BlindPerson());
-        return "form-cv";
+        return "input-form";
     }
 
     @PostMapping("create")
@@ -39,14 +39,15 @@ public class BlindPersonController {
         this.blindService.save(blindPerson);
         return "redirect:/";
     }
-    @GetMapping("test")
+    @GetMapping("voice")
     public String get(Model model) {
         model.addAttribute("blindPerson", new BlindPerson());
-        return "form-speak";
+        return "voice-form";
     }
-    @GetMapping("hoangTest")
-    public String tesss(Model model) {
+    @GetMapping("default")
+    public String getDefault(Model model) {
         model.addAttribute("blindPerson", new BlindPerson());
-        return "hoangTest";
+        return "default";
     }
+
 }

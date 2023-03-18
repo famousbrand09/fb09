@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap-5.3.0/css/bootstrap.min.css"
+          th:href="@{/bootstrap-5.3.0/css/bootstrap.min.css}">
+    <script th:src="@{/responsivevoice.js}"></script>
+</head>
+<body onload="show()">
+<h2>Trang này để chuyển hướng chọn cách nhập</h2>
+
+<script>
+
+  const recognition = new webkitSpeechRecognition();
+
+  // Thiết lập ngôn ngữ cho recognition là tiếng Việt
+  recognition.lang = 'vi-VN';
+  // Gán một hàm callback khi nhận được kết quả nhận dạng giọng nói
+  recognition.onresult = function(event) {
+    // Lấy ra đoạn văn bản được nhận dạng
+    const speechResult = event.results[event.results.length - 1][0].transcript;
+
+    // Gọi hàm của bạn để xử lý kết quả
+    // Ví dụ: console.log(speechResult) để in ra kết quả nhận dạng giọng nói trên console
+    console.log(speechResult);
+    show(speechResult)
+  }
+
+  // Bắt đầu nhận dạng giọng nói khi trang web được tải
+  recognition.start();
+
+  function show(speechResult) {
+    // document.getElementById('name').value = speechResult;
+    responsiveVoice.speak("Mời bạn chọn cách nhập thông tin, nhấn phím qua trái là chọn cách nhập bằng tay, nhấn phím qua phải là nhập bằng giọng nói","Vietnamese Female");
+    document.addEventListener("keydown", function(event) {
+      if (event.code === "ArrowLeft") {
+        window.location.href = "http://localhost:8080/input"
+        // xử lý khi người dùng ấn phím mũi tên sang trái
+      } else if (event.code === "ArrowRight") {
+        window.location.href = "http://localhost:8080/voice"
+        // xử lý khi người dùng ấn phím mũi tên sang phải
+      }else {
+          show()
+      }
+    });
+  }
+</script>
+<script src="../static/bootstrap-5.3.0/js/bootstrap.min.js"
+        th:src="@{/bootstrap-5.3.0/js/bootstrap.min.js}"></script>
+</body>
+</html>
