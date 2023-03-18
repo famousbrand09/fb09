@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 public class BlindPersonController {
@@ -31,10 +28,10 @@ public class BlindPersonController {
         return "list-cv";
     }
 
-    @GetMapping("form")
+    @GetMapping("input")
     public String getForm(Model model) {
         model.addAttribute("blindPerson", new BlindPerson());
-        return "form-cv";
+        return "input-form";
     }
 
     @PostMapping("create")
@@ -42,4 +39,15 @@ public class BlindPersonController {
         this.blindService.save(blindPerson);
         return "redirect:/";
     }
+    @GetMapping("voice")
+    public String get(Model model) {
+        model.addAttribute("blindPerson", new BlindPerson());
+        return "voice-form";
+    }
+    @GetMapping("default")
+    public String getDefault(Model model) {
+        model.addAttribute("blindPerson", new BlindPerson());
+        return "default";
+    }
+
 }

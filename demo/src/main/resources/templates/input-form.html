@@ -14,8 +14,8 @@
         <form th:action="@{/create}" th:method="POST" th:object="${blindPerson}">
             <h2 class="mb-3 text-center">Mẫu đăng ký thông tin tìm việc làm</h2>
             <div class="mb-3">
-                <label for="name" class="form-label">Tên:</label>
-                <input onfocus="nameInput()" th:field="*{name}" type="text" class="form-control" id="name">
+                <label class="form-label">Tên:</label>
+                <input onfocus="nameInput()" th:id="name" th:field="*{name}" type="text" class="form-control" >
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Day Of Birth:</label>
@@ -31,7 +31,7 @@
             </div>
             <div class="mb-3">
                 <label for="exp" class="form-label">Experience:</label>
-                <input onfocus="expBlind()" th:field="*{exp}"  type="text" class="form-control" id="exp">
+                <input onfocus="expBlind()" th:field="*{exp}" type="text" class="form-control" id="exp">
             </div>
             <div class="mb-3">
                 <label for="skill" class="form-label">Skill:</label>
@@ -43,7 +43,8 @@
             </div>
             <div class="mb-3">
                 <label for="phoneNumber" class="form-label">Phone Number:</label>
-                <input onfocus="phoneNumberBlind()" th:field="*{phoneNumber}" type="text" class="form-control" id="phoneNumber">
+                <input onfocus="phoneNumberBlind()" th:field="*{phoneNumber}" type="text" class="form-control"
+                       id="phoneNumber">
             </div>
             <div class="mb-3">
                 <!-- Button trigger modal -->
@@ -55,38 +56,48 @@
     </div>
 </div>
 
+<button class="btn btn-success" id='btnTalk'>Voice chat!</button>
+<br><br>
+<span ></span>
+</body>
 <script>
     // function hello(){
     //     document.getElementById('nhac').play();
     // }
 
-    hello();
-    function nameInput(){
+    function nameInput() {
         responsiveVoice.speak("Mời bạn nhập tên", "Vietnamese Female");
     }
-    function dayOfBirthInput(){
+
+    function dayOfBirthInput() {
         responsiveVoice.speak("Mời bạn nhập ngày sinh", "Vietnamese Female");
     }
-    function addressBlind(){
+
+    function addressBlind() {
         responsiveVoice.speak("Mời bạn nhập địa chỉ", "Vietnamese Female");
     }
-    function genderBlind(){
+
+    function genderBlind() {
         responsiveVoice.speak("Mời bạn nhập giới tính", "Vietnamese Female");
     }
-    function expBlind(){
+
+    function expBlind() {
         responsiveVoice.speak("Mời bạn mô tả kinh nghiệm", "Vietnamese Female");
     }
-    function skillBlind(){
+
+    function skillBlind() {
         responsiveVoice.speak("Mời bạn mô tả kỹ năng, điểm mạnh của bạn", "Vietnamese Female");
     }
-    function contentBlind(){
+
+    function contentBlind() {
         responsiveVoice.speak("Mời bạn nhập những mô tả khác", "Vietnamese Female");
     }
-    function phoneNumberBlind(){
+
+    function phoneNumberBlind() {
         responsiveVoice.speak("Mời bạn nhập số điện thoại", "Vietnamese Female");
     }
 
-    function confirmInfo(){
+    function confirmInfo() {
         responsiveVoice.speak("Xác nhận thông tin của bạn, nếu đúng hãy nhấn enter", "Vietnamese Female");
     }
 
@@ -98,7 +109,7 @@
     //         // hello()
     //         // clearInterval(interval)
     //     }
-    // }, 1000)
+    // Khởi tạo đối tượng SpeechRecognition
 
 </script>
 </body>
