@@ -101,9 +101,12 @@
         responsiveVoice.speak("Mời bạn nhập giới tính, nếu là nam thì bấm nút sang trái, nếu là nữ thì bấm nút sang phải", "Vietnamese Female")
         document.addEventListener("keydown", function (event) {
                 if (event.code === "ArrowRight") {
-                    document.getElementById(name).value = '2'
+                    document.getElementById(name).value = '0'
+                    return
+
                 } else if (event.code === "ArrowLeft") {
                     document.getElementById(name).value = '1';
+                    return;
                 } else {
                     genderBlind(name)
                 }
