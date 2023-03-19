@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer List</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="../static/bootstrap-5.3.0/css/bootstrap.min.css"
           th:href="@{/bootstrap-5.3.0/css/bootstrap.min.css}">
+    <script th:src="@{/responsivevoice.js}"></script>
+
     <style>
         .name-card {
             display: flex;
@@ -26,19 +28,14 @@
     </style>
 
 </head>
-<body style="cursor: auto; background-color: #eff2f4">
+<body style="cursor: auto; background-color: #eff2f4" onload="successAlert()">
 <div class="w-100" style="min-height: 300px; background-color: #5e72e4; position: absolute;"></div>
 <div class="container-fluid">
     <!--Header-->
     <div id="header" class="row">
         <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-start">
-                    <a class="navbar-brand" th:href="@{/}" style="color: white; font-weight: bold">
-                        Blind CV
-                    </a>
-                </div>
-                <div class="d-flex align-items-center">
+            <div class="container-fluid d-flex justify-content-end">
+                <div class="d-flex align-items-right">
                     <button type="button" class="btn btn btn-outline-light">
                         <span style="font-weight: bold">Login</span>
                     </button>
@@ -67,7 +64,7 @@
         <div class="col-10">
             <!--Header Link-->
             <div class="row" style="width: 100%">
-                <div id="header-link" class="col-12">
+                <div id="header-link" class="col-12" style="height: 80px">
                     <nav class="navbar navbar-expand-lg" style="margin-left: 50px">
                         <div class="container-fluid">
                             <div class="d-flex justify-content-start">
@@ -77,15 +74,6 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" th:href="@{default}">Form</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">Item</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">Item</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="">Item</a>
                                     </li>
                                 </ul>
                             </div>
@@ -108,17 +96,11 @@
             <!--Content-->
             <div class="row" style="width: 100%">
                 <div id="content" class="col-12" style="padding-top: 5px">
-                    <h4 style="text-align: center">List CV</h4>
-                    <div style="margin-bottom: 10px">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#createCustomer">
-                            Add New
-                        </button>
-                    </div>
+                    <h1 class="my-4" style="text-align: center; font-family:'Agency FB'">LIST OF CANDIDATES</h1>
                     <!--List-->
                     <div class="row">
                         <div style="padding: 1px" class="name-card col-3 mb-3" th:each="row : ${blindPersonPage}">
-                            <div class="name-card__content-left">
+                            <div class="name-card__content-left d-flex justify-content-center align-items-center">
                                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png"
                                      alt="Logo" class="name-card__avatar">
                             </div>
@@ -132,7 +114,7 @@
 
                     </div>
                     <!--Pagination-->
-                    <div style="float: right; margin-right: 15px; margin-top: 5px">
+                    <div style="float: right; margin-right: 15px;">
                         <a th:href="@{/(page=${blindPersonPage.number - 1})}"
                            th:if="${blindPersonPage.hasPrevious()}">
                             <button class="btn btn-primary">Previous</button>
@@ -150,7 +132,7 @@
     </div>
     <!--Footer-->
     <div id="footer" class="row">
-        <div class="d-flex justify-content-center align-items-center">@FuramaResort2023</div>
+        <div class="d-flex justify-content-center align-items-center">@FB09-HACKATHON-2023</div>
     </div>
     <!--End Footer-->
 </div>
@@ -176,22 +158,31 @@
         </div>
     </div>
 </div>
-<script>
-    function getInfoEdit(id, name, dayOfBirth, idCard, phoneNumber, email, address, customerType) {
-        document.getElementById("customerId").value = id;
-        document.getElementById("customerName").value = name;
-        document.getElementById("customerDay").value = dayOfBirth;
-        document.getElementById("customerIdCard").value = idCard;
-        document.getElementById("customerPhone").value = phoneNumber;
-        document.getElementById("customerEmail").value = email;
-        document.getElementById("customerAddress").value = address;
-        document.getElementById("customerTypeId").value = customerType;
-    }
+<input th:if="${mess}" th:value="${mess}" id="mess" hidden>
 
-    function getInfoDelete(id, name) {
-        document.getElementById("deleteId").value = id;
-        document.getElementById("deleteName").innerText = name;
+<script>
+    function successAlert(){
+        let mess= document.getElementById('mess').value
+        if(mess){
+            responsiveVoice.speak("bạn đã tạo CV thành công", "Vietnamese Female");
+        }
+
     }
+    // function getInfoEdit(id, name, dayOfBirth, idCard, phoneNumber, email, address, customerType) {
+    //     document.getElementById("customerId").value = id;
+    //     document.getElementById("customerName").value = name;
+    //     document.getElementById("customerDay").value = dayOfBirth;
+    //     document.getElementById("customerIdCard").value = idCard;
+    //     document.getElementById("customerPhone").value = phoneNumber;
+    //     document.getElementById("customerEmail").value = email;
+    //     document.getElementById("customerAddress").value = address;
+    //     document.getElementById("customerTypeId").value = customerType;
+    // }
+    //
+    // function getInfoDelete(id, name) {
+    //     document.getElementById("deleteId").value = id;
+    //     document.getElementById("deleteName").innerText = name;
+    // }
 </script>
 </body>
 <script src="../static/bootstrap-5.3.0/js/bootstrap.min.js"

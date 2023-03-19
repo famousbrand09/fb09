@@ -8,45 +8,46 @@
     <script th:src="@{/responsivevoice.js}"></script>
 
 </head>
-<body>
+<body onload="show()">
 <div class="container">
     <div style="width: 60%; margin: 0 auto">
-        <form th:action="@{/create}" th:method="POST" th:object="${blindPerson}">
-            <h2 class="mb-3 text-center">Mẫu đăng ký thông tin tìm việc làm</h2>
-            <div class="mb-3">
+        <form th:action="@{/create}" th:method="POST" th:object="${blindPerson}" autocomplete="off">
+            <h2 class="mb-1 text-center">Mẫu đăng ký thông tin tìm việc làm nhập bằng phím</h2>
+            <div class="mb-1">
                 <label class="form-label">Tên:</label>
-                <input onfocus="nameInput()" th:id="name" th:field="*{name}" type="text" class="form-control" >
+                <input onfocus="nameInput()" th:id="name" th:field="*{name}" type="text" class="form-control"
+                       onfocusout="nameOutput('name')">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="date" class="form-label">Day Of Birth:</label>
                 <input onfocus="dayOfBirthInput()" th:field="*{dateOfBirth}" type="text" class="form-control" id="date">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="address" class="form-label">Address:</label>
                 <input onfocus="addressBlind()" th:field="*{address}" type="text" class="form-control" id="address">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="gender" class="form-label">Gender:</label>
                 <input onfocus="genderBlind()" th:field="*{gender}" type="text" class="form-control" id="gender">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="exp" class="form-label">Experience:</label>
                 <input onfocus="expBlind()" th:field="*{exp}" type="text" class="form-control" id="exp">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="skill" class="form-label">Skill:</label>
                 <input onfocus="skillBlind()" th:field="*{skill}" type="text" class="form-control" id="skill">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="content" class="form-label">Content:</label>
                 <input onfocus="contentBlind()" th:field="*{content}" type="text" class="form-control" id="content">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="phoneNumber" class="form-label">Phone Number:</label>
                 <input onfocus="phoneNumberBlind()" th:field="*{phoneNumber}" type="text" class="form-control"
                        id="phoneNumber">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <!-- Button trigger modal -->
                 <button onfocus="confirmInfo()" type="submit" class="btn btn-primary">
                     Xác nhận thông tin
@@ -55,22 +56,22 @@
         </form>
     </div>
 </div>
-
-<button class="btn btn-success" id='btnTalk'>Voice chat!</button>
-<br><br>
-<span ></span>
 </body>
 <script>
-    // function hello(){
-    //     document.getElementById('nhac').play();
-    // }
+    function show() {
+        responsiveVoice.speak("Đây là trang nhập thông tin đăng ký bằng nhập bằng phím, nhấn phím tab để bắt đầu nhập thông tin", "Vietnamese Female");
+    }
+
+    let flagCheckName = false;
 
     function nameInput() {
-        responsiveVoice.speak("Mời bạn nhập tên", "Vietnamese Female");
+        flagCheckName = true;
+        responsiveVoice.speak("Mời bạn nhập tên, sau đó nhấn phím sang phải để kiểm tra thông tin vừa nhập", "Vietnamese Female");
     }
 
     function dayOfBirthInput() {
-        responsiveVoice.speak("Mời bạn nhập ngày sinh", "Vietnamese Female");
+        responsiveVoice.speak("Mời bạn nhập năm sinh", "Vietnamese Female");
+        responsiveVoice.speak("Bạn vừa nhập là dxvsdfdsfdsf", "Vietnamese Female");
     }
 
     function addressBlind() {
@@ -78,19 +79,19 @@
     }
 
     function genderBlind() {
-        responsiveVoice.speak("Mời bạn nhập giới tính", "Vietnamese Female");
+        responsiveVoice.speak("Mời bạn nhập giới tính, nếu là nam thì nhập 0, nếu là nữ thì nhập 1", "Vietnamese Female");
     }
 
     function expBlind() {
-        responsiveVoice.speak("Mời bạn mô tả kinh nghiệm", "Vietnamese Female");
+        responsiveVoice.speak("Mời bạn nhập mô tả kinh nghiệm", "Vietnamese Female");
     }
 
     function skillBlind() {
-        responsiveVoice.speak("Mời bạn mô tả kỹ năng, điểm mạnh của bạn", "Vietnamese Female");
+        responsiveVoice.speak("Mời bạn nhập mô tả kỹ năng, điểm mạnh của bạn", "Vietnamese Female");
     }
 
     function contentBlind() {
-        responsiveVoice.speak("Mời bạn nhập những mô tả khác", "Vietnamese Female");
+        responsiveVoice.speak("Mời bạn mô tả những yêu cầu hoặc mong muốn khác nếu có", "Vietnamese Female");
     }
 
     function phoneNumberBlind() {
@@ -98,19 +99,31 @@
     }
 
     function confirmInfo() {
-        responsiveVoice.speak("Xác nhận thông tin của bạn, nếu đúng hãy nhấn enter", "Vietnamese Female");
+        responsiveVoice.speak("Xác nhận thông tin của bạn, nếu muốn gửi thông tin đăng ký thì vui lòng nhấn phím enter hoặc space", "Vietnamese Female");
     }
 
-    let interval;
+    let flag = false;
 
-    // interval = setInterval(() => {
-    //
-    //     if (responsiveVoice) {
-    //         // hello()
-    //         // clearInterval(interval)
-    //     }
-    // Khởi tạo đối tượng SpeechRecognition
+    function nameOutput(name) {
+        flagCheckName = false;
+    }
 
+
+    document.addEventListener("keydown", function (event) {
+            if (flagCheckName) {
+                if (event.code === "ArrowRight") {
+                    responsiveVoice.speak("Tên bạn vừa nhập là " + document.getElementById("name").value
+                        + ", nếu thông tin đã chính xác thì nhấn tab để tiếp tục nhập thông tin tiếp theo, nếu sai thì nhấn phím lên để nhập lại", "Vietnamese Female");
+                }
+                else if (event.keyCode === 38) {
+                    debugger
+                    document.getElementById('name').value = '';
+                    responsiveVoice.speak("Mời bạn nhập lại tên", "Vietnamese Female");
+                    return;
+                }
+            }
+        }
+    )
 </script>
 </body>
 <script src="../static/bootstrap-5.3.0/js/bootstrap.min.js"

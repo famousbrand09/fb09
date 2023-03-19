@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BlindPersonController {
@@ -35,8 +36,9 @@ public class BlindPersonController {
     }
 
     @PostMapping("create")
-    public String addNew(@ModelAttribute BlindPerson blindPerson) {
+    public String addNew(@ModelAttribute BlindPerson blindPerson, RedirectAttributes redirectAttributes) {
         this.blindService.save(blindPerson);
+        redirectAttributes.addFlashAttribute("mess", true);
         return "redirect:/";
     }
     @GetMapping("voice")
