@@ -11,66 +11,63 @@
 <body onload="show()">
 <div class="container">
     <div style="width: 60%; margin: 0 auto">
-        <form th:action="@{/create}" th:method="POST" th:object="${blindPerson}">
-            <h2 class="mb-3 text-center">Mẫu đăng ký thông tin tìm việc làm</h2>
-            <div class="mb-3">
+        <form th:action="@{/create}" th:method="POST" th:object="${blindPerson}" autocomplete="off">
+            <h2 class="mb-1 text-center">Mẫu đăng ký thông tin tìm việc làm nhập bằng giọng nói</h2>
+            <div class="mb-1">
                 <label class="form-label">Tên:</label>
-                <input onfocus="nameInput('name')" th:id="name" th:field="*{name}" type="text" class="form-control">
+                <input onfocus="nameInput('name')" th:id="name" th:field="*{name}" type="text" class="form-control" onfocusout="nameOutput()">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Day Of Birth:</label>
                 <input onfocus="dayOfBirthInput('dateOfBirth')" th:field="*{dateOfBirth}" type="text"
                        class="form-control" th:id="dateOfBirth">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Address:</label>
                 <input onfocus="addressBlind('address')" th:field="*{address}" type="text" class="form-control"
                        th:id="address">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Gender:</label>
-                <input onfocus="genderBlind('gender')" th:field="*{gender}" type="text" class="form-control" th:value="0"
-                       th:id="gender">
+                <input onfocus="genderBlind()" th:field="*{gender}" type="text" class="form-control"
+                       th:value="0"
+                       th:id="gender" onfocusout="genderOut()">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Experience:</label>
                 <input onfocus="expBlind('exp')" th:field="*{exp}" type="text" class="form-control" th:id="exp">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Skill:</label>
                 <input onfocus="skillBlind('skill')" th:field="*{skill}" type="text" class="form-control" th:id="skill">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label class="form-label">Content:</label>
                 <input onfocus="contentBlind('content')" th:field="*{content}" type="text" class="form-control"
                        th:id="content">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label class="form-label">Phone Number:</label>
                 <input onfocus="phoneNumberBlind('phoneNumber')" th:field="*{phoneNumber}" type="text"
                        class="form-control"
                        th:id="phoneNumber">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <!-- Button trigger modal -->
-                <button onfocus="confirmInfo()" type="submit" class="btn btn-primary">
+                <button onfocus="confirmInfo()" onclick="onSubmit()" type="submit" class="btn btn-primary">
                     Xác nhận thông tin
                 </button>
             </div>
         </form>
     </div>
 </div>
-
-<button class="btn btn-success" id='btnTalk'>Voice chat!</button>
-<br><br>
-<span></span>
 </body>
 <script>
     function nameInput(name) {
-        responsiveVoice.speak("Mời bạn nhập tên", "Vietnamese Female", {
+        responsiveVoice.speak("Mời bạn đọc tên", "Vietnamese Female", {
             onstart: () => {
             }, onend: () => {
-                listeningField(name)
+                listeningName(name)
             }
         });
         // setTimeout(function (){
@@ -80,7 +77,7 @@
 
     function dayOfBirthInput(name) {
         // nameInput("Mời bạn nhập ngày sinh", "dateOfBirth");
-        responsiveVoice.speak("Mời bạn nhập ngày sinh", "Vietnamese Female", {
+        responsiveVoice.speak("Mời bạn đọc năm sinh", "Vietnamese Female", {
             onstart: () => {
             }, onend: () => {
                 listeningField(name)
@@ -89,7 +86,7 @@
     }
 
     function addressBlind(name) {
-        responsiveVoice.speak("Mời bạn nhập địa chỉ", "Vietnamese Female", {
+        responsiveVoice.speak("Mời bạn đọc địa chỉ", "Vietnamese Female", {
             onstart: () => {
             }, onend: () => {
                 listeningField(name)
@@ -97,22 +94,32 @@
         });
     }
 
-    function genderBlind(name) {
+    let flag = false;
+    function genderOut() {
+        flag = false;
+    }
+
+    function genderBlind() {
         responsiveVoice.speak("Mời bạn nhập giới tính, nếu là nam thì bấm nút sang trái, nếu là nữ thì bấm nút sang phải", "Vietnamese Female")
-        document.addEventListener("keydown", function (event) {
+        flag = true;
+    }
+
+    document.addEventListener("keydown", function (event) {
+        debugger
+            if (flag) {
                 if (event.code === "ArrowRight") {
-                    document.getElementById(name).value = '0'
+                    document.getElementById('gender').value = '1'
                     return
 
                 } else if (event.code === "ArrowLeft") {
-                    document.getElementById(name).value = '1';
+                    document.getElementById('gender').value = '0';
                     return;
                 } else {
-                    genderBlind(name)
+                    genderBlind()
                 }
             }
-        )
-    }
+        }
+    )
 
 
     function expBlind(name) {
@@ -134,7 +141,7 @@
     }
 
     function contentBlind(name) {
-        responsiveVoice.speak("Mời bạn nhập những mô tả khác", "Vietnamese Female", {
+        responsiveVoice.speak("Mời bạn mô tả những yêu cầu hoặc mong muốn khác nếu có", "Vietnamese Female", {
             onstart: () => {
             }, onend: () => {
                 listeningField(name)
@@ -152,22 +159,50 @@
     }
 
     function confirmInfo(name) {
-        responsiveVoice.speak("Xác nhận thông tin của bạn, nếu đúng hãy nhấn enter", "Vietnamese Female", {
-            onstart: () => {
-            }, onend: () => {
-                listeningField(name)
-            }
-        });
+        responsiveVoice.speak("Xác nhận thông tin của bạn, nếu bạn muốn gửi thông tin thì hãy nhấn enter hoặc space", "Vietnamese Female")
+
     }
 
-    //1
     function show() {
-        responsiveVoice.speak("Đây là trang nhập thông tin đăng ký bằng giọng nói, nhấn phím qua tab để bắt đầu nhập thông tin", "Vietnamese Female");
+        responsiveVoice.speak("Đây là trang nhập thông tin đăng ký bằng giọng nói, nhấn phím tab để bắt đầu nhập thông tin", "Vietnamese Female");
     }
 
-    //2
+    function onSubmit() {
+        responsiveVoice.speak("Cảm ơn bạn đã đăng ký, chúng tôi sẽ phản hồi cho bạn sớm nhất.", "Vietnamese Female");
+    }
 
+    let flagCheckName = false;
 
+    function listeningName(id) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'vi-VN';
+        recognition.onresult = function (event) {
+            const speechResult = event.results[event.results.length - 1][0].transcript;
+            document.getElementById(id).value = speechResult;
+            responsiveVoice.speak("Tên bạn vừa nhập là " + speechResult
+                + ", nếu thông tin đã chính xác thì nhấn tab để tiếp tục nhập thông tin tiếp theo, nếu sai thì nhấn phím lên để nhập lại", "Vietnamese Female");
+            flagCheckName = true;
+        }
+        // Bắt đầu nhận dạng giọng nói khi trang web được tải
+        recognition.start();
+    }
+
+    document.addEventListener("keydown", function (event) {
+            if (flagCheckName) {
+                if (event.keyCode === 38) {
+                    debugger
+                    document.getElementById('name').value = '';
+                    responsiveVoice.speak("Mời bạn đọc lại tên ", "Vietnamese Female", {
+                        onstart: () => {
+                        }, onend: () => {
+                            listeningName("name")
+                        }
+                    })
+                    return;
+                }
+            }
+        }
+    )
     function listeningField(id) {
         const recognition = new webkitSpeechRecognition();
         recognition.lang = 'vi-VN';
@@ -177,6 +212,11 @@
         }
         // Bắt đầu nhận dạng giọng nói khi trang web được tải
         recognition.start();
+    }
+
+
+    function nameOutput() {
+        flagCheckName = false;
     }
 
 
